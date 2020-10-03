@@ -1423,6 +1423,82 @@ module class_polymorphism;
 endmodule
 
 //___________________________________________________________________________________________________________________________________________________________________\\
+
+//-------------------INHERITANCE-------------------//
+module test;
+  
+class base;
+  int num1;
+  int num2;
+  static int num3;
+  
+  function new(int value);
+    num1 = value;
+    num2 = num1*10;
+  endfunction
+endclass
+
+class child extends base;
+  function new(int number);
+    super.new(number);
+  endfunction
+endclass
+
+base b1;
+  child c1[5];
+
+initial begin  
+//  b1 = new(5);
+  foreach(c1[i]) begin
+    c1[i] = new(i+10);
+    c1[i].num3++;
+    
+    $display("%p",c1);
+    $display("%0d",c1.num3);
+  end
+end
+
+endmodule
+    
+//___________________________________________________________________________________________________________________________________________________________________\\
+
+//-------------------POLYMORPHISM-------------------//
+module test;
+  class parent;
+    virtual task body();
+      $display("IM PARENT");
+    endtask
+  endclass
+  
+  class child extends parent;
+    virtual task body();
+      $display("IM CHILD");
+    endtask
+  endclass
+  
+  parent p1;
+  child c1,c2;
+  
+  initial begin
+    p1 = new();
+    c1 = new();
+    c2 = new();
+    
+    p1.body();
+    c1.body();
+    
+    p1 = c1;
+   // $cast(c2,p1);
+
+    p1.body();
+    //c1.body();
+  //  c2.body();
+    
+    
+  end
+endmodule
+         
+//___________________________________________________________________________________________________________________________________________________________________\\
 //OVERRIDING PARENT CLASS METHODS
 
 class parent_class;
