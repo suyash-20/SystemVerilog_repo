@@ -790,6 +790,9 @@ endmodule
 
 //DEEP COPY
 
+
+  
+  
 class play_area;
 int no_games;
 bit availability;
@@ -811,11 +814,12 @@ play_area p_h = new();
 function building copy();
 copy = new();
 copy.building_no = this. building_no;
-copy.p_h = this.p_h;
+copy.p_h = this.p_h.copy;
 endfunction
 endclass
 
 module test;
+
 
 building b_a, b_b;
 
@@ -837,10 +841,12 @@ $display("_____________________________________________");
 
 b_b.building_no = 3;
 b_b.p_h.availability = 0;
-$display("BUILDING B %p", b_b);
+$display("BUILDING A %p", b_a);
+  $display("BUILDING B %p", b_b);
 end
 
 endmodule
+
 
 /*OUTPUT:
 # KERNEL: ASDB file was created in location /home/runner/dataset.asdb
